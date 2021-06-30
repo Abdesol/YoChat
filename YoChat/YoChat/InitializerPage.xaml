@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="YoChat.InitializerPage">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ImageButton Grid.Column="0" Source="back.png" BackgroundColor="Transparent" Scale="0.4" Clicked="ButtonClickedGesture"/>
+                <Label Grid.Column="1" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+            </Grid>
+            <Frame x:Name="NickNameFrame" Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}"  CornerRadius="10" Margin="20,80,20,0">
+                <StackLayout>
+                    <Label Text="Pick Your Nickname" TextColor="White" FontSize="18" HorizontalTextAlignment="Start" WidthRequest="160"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Entry Grid.Column="0" Placeholder="Type here" MaxLength="10" TextColor="White" PlaceholderColor="#B9B9B9"/>
+                        <Frame Grid.Column="1" BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}" CornerRadius="100">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ButtonClickedGesture"/>
+                            </Frame.GestureRecognizers>
+                            <Label Text="GO" TextColor="{AppThemeBinding Dark=White, Light=Black, Default=Black}" FontSize="15"/>
+                        </Frame>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+            <Frame x:Name="RoomCodeFrame" Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}"  CornerRadius="10" Margin="20,80,20,0">
+                <StackLayout>
+                    <Label Text="Enter Room Code" TextColor="White" FontSize="18" HorizontalTextAlignment="Start" WidthRequest="160"/>
+                    <Label x:Name="not_exist_label" Text="Room doesn't exist" TextColor="Red" IsVisible="False"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Entry x:Name="roomcode_entry" Grid.Column="0" Placeholder="Type here" MaxLength="10" TextColor="White" PlaceholderColor="#B9B9B9"/>
+                        <Frame Grid.Column="1" BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}" CornerRadius="100">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ButtonClickedGesture"/>
+                            </Frame.GestureRecognizers>
+                            <Label Text="GO" TextColor="{AppThemeBinding Dark=White, Light=Black, Default=Black}" FontSize="15"/>
+                        </Frame>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

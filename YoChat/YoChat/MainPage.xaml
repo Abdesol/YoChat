@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="YoChat.MainPage">
+
+    <Grid BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ImageButton Grid.Column="0" Source="menu.png" BackgroundColor="Transparent" Scale="0.4" Clicked="ButtonClickedGesture"/>
+            <Label Grid.Column="1" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+        </Grid>
+        <StackLayout x:Name="choice_btns" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
+
+            <Frame BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}"  CornerRadius="30">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ButtonClickedGesture"/>
+                </Frame.GestureRecognizers>
+                <Label Text="Create Room" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" WidthRequest="160"/>
+            </Frame>
+
+            <Frame BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}"  CornerRadius="30">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ButtonClickedGesture"/>
+                </Frame.GestureRecognizers>
+                <Label Text="Join Room" TextColor="White" FontSize="18" HorizontalTextAlignment="Center" WidthRequest="160"/>
+            </Frame>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
