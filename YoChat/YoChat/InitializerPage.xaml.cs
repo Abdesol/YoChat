@@ -12,8 +12,10 @@ namespace YoChat
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InitializerPage : ContentPage
     {
+        public int which_page { get; set; }
         public InitializerPage(int which_page)
         {
+            this.which_page = which_page;
             InitializeComponent();
             if (which_page == 0)
             {
@@ -24,6 +26,7 @@ namespace YoChat
 
         public async void ButtonClickedGesture(object sender, EventArgs args)
         {
+            
             try
             {
                 var frame = (Frame)sender;
@@ -34,7 +37,6 @@ namespace YoChat
                     string room_code = roomcode_entry.Text;
                     if(room_code == "ABCDE")
                     {
-
                         RoomCodeFrame.IsVisible = false;
                     }
                     else
@@ -44,7 +46,7 @@ namespace YoChat
                 }
                 else
                 {
-                    // Navigate to the chat page
+                    await Navigation.PushModalAsync(new ChatPage(this.which_page));
                 }
             }
             catch

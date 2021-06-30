@@ -4,6 +4,10 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Android.Widget;
+using Android.Views;
+using Android.Graphics;
 
 namespace YoChat.Droid
 {
@@ -18,6 +22,10 @@ namespace YoChat.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+
+            App.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -27,4 +35,6 @@ namespace YoChat.Droid
         }
 
     }
+
+    
 }

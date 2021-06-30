@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:YoChat"
+             x:Class="YoChat.ChatPage">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <AbsoluteLayout Grid.Row="0" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ImageButton Grid.Column="0" Source="back.png" BackgroundColor="Transparent" Scale="0.4" Clicked="BackClicked"/>
+                    <Label Grid.Column="1" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                    <Button Grid.Column="2" Text="{Binding user_type_leave_text}" BackgroundColor="Transparent" TextColor="Red" Clicked="LeaveClicked"/>
+                </Grid>
+            </AbsoluteLayout>
+            
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="{Binding msg_h}"/>
+                </Grid.RowDefinitions>
+                <ListView Grid.Row="0" x:Name="MessageList" ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame BackgroundColor="{Binding msg_color}"  CornerRadius="8" HorizontalOptions="{Binding position}" Margin="10,5,10,5" Padding="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Text="{Binding user}" TextColor="#DEDEDE" HorizontalOptions="Start" FontSize="12" VerticalOptions="Start"/>
+                                            <Label Grid.Column="1" Text="{Binding time}" TextColor="#DEDEDE" HorizontalOptions="End" FontSize="10" />
+                                        </Grid>
+                                        <Label Grid.Row="1" Text="{Binding message}" TextColor="White"/>
+                                    </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <local:ChatEditor Grid.Row="0" Grid.Column="0"
+                            VerticalOptions="FillAndExpand"
+                            AutoSize="TextChanges" 
+                            Keyboard="Chat"
+                            Margin="10,0,0,0"
+                            Text="{Binding message}"
+                            TextChanged="EditorEdited"
+                            Placeholder="Message"/>
+
+
+                    <ImageButton x:Name="SendBtn" VerticalOptions="End" Grid.Column="1" Grid.Row="0" Source="send.png" BackgroundColor="Transparent" 
+                                 Scale="0.4" Command="{Binding SendMessageCommand}" CommandParameter="{x:Reference SendBtn}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
