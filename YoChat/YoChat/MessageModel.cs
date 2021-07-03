@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace YoChat
@@ -11,7 +12,13 @@ namespace YoChat
         public string message { get; set; }
         public string time { get; set; }
         public LayoutOptions position { get; set; }
+        public Color msg_color_dark { get; set; }
+        public Color msg_color_light { get; set; }
+
         public Color msg_color { get; set; }
+        public double msg_w { get; set; }
+
+        private double max_msg_width = DeviceDisplay.MainDisplayInfo.Width / 2.25;
 
         public MessageModel(bool from_me, string user, string message, long timestamp)
         {
@@ -19,13 +26,32 @@ namespace YoChat
             {
                 this.user = "Me";
                 position = LayoutOptions.EndAndExpand;
-                msg_color = Color.FromHex("#3E6189");
+                var brush = Application.Current.Resources["sent_msg_color"] as SolidColorBrush;
+                msg_color = brush.Color;
+                //msg_color = System.Drawing.Color.FromArgb(brush);
+                //msg_color_dark = Color.FromHex("3E6189");
+                //msg_color_light = Color.FromHex("3590EA");
             }
             else
             {
                 this.user = user;
                 position = LayoutOptions.StartAndExpand;
-                msg_color = Color.FromHex("#222E3A");
+                var brush = Application.Current.Resources["recv_msg_color"] as SolidColorBrush;
+                msg_color = brush.Color;
+                //msg_color_dark = Color.FromHex("222E3A");
+                //msg_color_light = Color.FromHex("CADCF2");
+            }
+
+            
+
+            var msg_cur = (message.Length*8)+80;
+            if (msg_cur > max_msg_width)
+            {
+                msg_w = max_msg_width;
+            }
+            else
+            {
+                msg_w = msg_cur;
             }
 
             this.message = message;
@@ -34,5 +60,6 @@ namespace YoChat
             dtDateTime = dtDateTime.AddSeconds(timestamp).ToLocalTime();
             this.time = dtDateTime.ToString("h:mm tt");
         }
+
     }
 }

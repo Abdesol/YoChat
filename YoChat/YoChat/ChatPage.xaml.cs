@@ -87,6 +87,8 @@ namespace YoChat
             await btn.ScaleTo(1, 80);
             await Navigation.PushModalAsync(new MainPage());
         }
+
+        public void MessageClicked(object sender, EventArgs e){}
     }
 
     public partial class ChatEditor : Editor

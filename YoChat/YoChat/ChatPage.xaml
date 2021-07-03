@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="clr-namespace:YoChat"
+             xmlns:local="clr-namespace:YoChat" 
              x:Class="YoChat.ChatPage">
     <ContentPage.Content>
         <Grid BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}">
@@ -16,9 +16,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ImageButton Grid.Column="0" Source="back.png" BackgroundColor="Transparent" Scale="0.4" Clicked="BackClicked"/>
-                    <Label Grid.Column="1" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
-                    <Button Grid.Column="2" Text="{Binding user_type_leave_text}" BackgroundColor="Transparent" TextColor="Red" Clicked="LeaveClicked"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ImageButton Grid.Column="0" Grid.Row="0" Source="back.png" BackgroundColor="Transparent" Scale="0.4" Clicked="BackClicked"/>
+                    <Label Grid.Column="1" Grid.Row="0" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+                    <Button Grid.Column="2" Grid.Row="0" Text="{Binding user_type_leave_text}" BackgroundColor="Transparent" TextColor="Red" Clicked="LeaveClicked" HorizontalOptions="End"/>
                 </Grid>
             </AbsoluteLayout>
             
@@ -27,11 +30,19 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="{Binding msg_h}"/>
                 </Grid.RowDefinitions>
-                <ListView Grid.Row="0" x:Name="MessageList" ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ListView Grid.Row="0" Grid.Column="0" x:Name="MessageList"  ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame BackgroundColor="{Binding msg_color}"  CornerRadius="8" HorizontalOptions="{Binding position}" Margin="10,5,10,5" Padding="5">
+                                <Frame BackgroundColor="{Binding msg_color}"
+                                        CornerRadius="8"  HorizontalOptions="{Binding position}"
+                                       Margin="10,5,10,5" Padding="5" WidthRequest="{Binding msg_w}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="MessageClicked"/>
+                                    </Frame.GestureRecognizers>
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
@@ -53,7 +64,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Grid Grid.Row="1" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
+                <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
                     
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -67,6 +78,7 @@
                             AutoSize="TextChanges" 
                             Keyboard="Chat"
                             Margin="10,0,0,0"
+                            MaxLength="1000"
                             Text="{Binding message}"
                             TextChanged="EditorEdited"
                             Placeholder="Message"/>
