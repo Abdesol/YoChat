@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid   xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        Padding="10"
+        x:Class="YoChat.MsgCtrl">
+
+    <Frame x:Name="msg_frame" CornerRadius="10" Padding="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="user_name_label" Grid.Column="0" TextColor="#DEDEDE" HorizontalOptions="Start" FontSize="12" VerticalOptions="Start"/>
+                <Label x:Name="time_label" Grid.Column="1" TextColor="#DEDEDE" HorizontalOptions="End" FontSize="10" />
+            </Grid>
+            <Label x:Name="msg_label" Grid.Row="1" TextColor="White"/>
+        </Grid>
+    </Frame>
+</Grid>
