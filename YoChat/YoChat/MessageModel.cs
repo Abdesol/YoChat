@@ -8,26 +8,31 @@ namespace YoChat
 {
     public class MessageModel
     {
+        public bool is_mine { get; set; }
         public string user { get; set; }
         public string message { get; set; }
         public string time { get; set; }
-        public LayoutOptions position { get; set; }
-        public Color msg_color_dark { get; set; }
-        public Color msg_color_light { get; set; }
-
-        public Color msg_color { get; set; }
         public double msg_w { get; set; }
+        //public LayoutOptions position { get; set; }
+        //public Color msg_color_dark { get; set; }
+        //public Color msg_color_light { get; set; }
+
+        //public Color msg_color { get; set; }
 
         private double max_msg_width = DeviceDisplay.MainDisplayInfo.Width / 2.25;
 
         public MessageModel(bool from_me, string user, string message, long timestamp)
         {
+            is_mine = from_me;
+            this.user = from_me ? "Me" : user;
+
+            /*
             if(from_me == true)
             {
                 this.user = "Me";
-                position = LayoutOptions.EndAndExpand;
-                var brush = Application.Current.Resources["sent_msg_color"] as SolidColorBrush;
-                msg_color = brush.Color;
+                //position = LayoutOptions.EndAndExpand;
+                //var brush = Application.Current.Resources["sent_msg_color"] as SolidColorBrush;
+                //msg_color = brush.Color;
                 //msg_color = System.Drawing.Color.FromArgb(brush);
                 //msg_color_dark = Color.FromHex("3E6189");
                 //msg_color_light = Color.FromHex("3590EA");
@@ -35,24 +40,17 @@ namespace YoChat
             else
             {
                 this.user = user;
-                position = LayoutOptions.StartAndExpand;
-                var brush = Application.Current.Resources["recv_msg_color"] as SolidColorBrush;
-                msg_color = brush.Color;
+                //position = LayoutOptions.StartAndExpand;
+                // brush = Application.Current.Resources["recv_msg_color"] as SolidColorBrush;
+                //msg_color = brush.Color;
                 //msg_color_dark = Color.FromHex("222E3A");
                 //msg_color_light = Color.FromHex("CADCF2");
-            }
+            }*/
 
             
 
             var msg_cur = (message.Length*8)+80;
-            if (msg_cur > max_msg_width)
-            {
-                msg_w = max_msg_width;
-            }
-            else
-            {
-                msg_w = msg_cur;
-            }
+            msg_w = msg_cur > max_msg_width ? max_msg_width : msg_cur;
 
             this.message = message;
 

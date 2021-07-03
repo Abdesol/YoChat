@@ -73,7 +73,7 @@ namespace YoChat
             propertyChanged: SetMsgText);
 
 
-        private bool MsgText
+        public bool MsgText
         {
             get => (bool)GetValue(MsgTextProperty);
             set => SetValue(MsgTextProperty, value);
@@ -85,6 +85,29 @@ namespace YoChat
             ctrl.msg_label.Text = (string)newValue;
         }
 
+
+        //Message Width Property ------------------------------------------------------------------------------
+        public static readonly BindableProperty MsgWidthProperty = BindableProperty.Create(
+            nameof(MsgWidth),
+            typeof(string),
+            typeof(MsgCtrl),
+            propertyChanged: SetMsgWidth);
+
+
+        public bool MsgWidth
+        {
+            get => (bool)GetValue(MsgWidthProperty);
+            set => SetValue(MsgWidthProperty, value);
+        }
+
+        private static void SetMsgWidth(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is not MsgCtrl ctrl) return;
+            ctrl.msg_frame.WidthRequest = (double)newValue;
+        }
+
+
+
         // User Text Property ------------------------------------------------------------------------------
         public static readonly BindableProperty UserTextProperty = BindableProperty.Create(
             nameof(UserText),
@@ -93,7 +116,7 @@ namespace YoChat
             propertyChanged: SetUserText);
 
 
-        private bool UserText
+        public bool UserText
         {
             get => (bool)GetValue(UserTextProperty);
             set => SetValue(UserTextProperty, value);
@@ -105,6 +128,8 @@ namespace YoChat
             ctrl.user_name_label.Text = (string)newValue;
         }
 
+
+
         // Time Text Property ------------------------------------------------------------------------------
         public static readonly BindableProperty TimeTextProperty = BindableProperty.Create(
             nameof(TimeText),
@@ -113,7 +138,7 @@ namespace YoChat
             propertyChanged: SetTimeText);
 
 
-        private bool TimeText
+        public bool TimeText
         {
             get => (bool)GetValue(TimeTextProperty);
             set => SetValue(TimeTextProperty, value);

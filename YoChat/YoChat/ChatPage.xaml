@@ -36,31 +36,11 @@
                 <ListView Grid.Row="0" Grid.Column="0" x:Name="MessageList"  ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <Frame BackgroundColor="{Binding msg_color}"
-                                        CornerRadius="8"  HorizontalOptions="{Binding position}"
-                                       Margin="10,5,10,5" Padding="5" WidthRequest="{Binding msg_w}">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="MessageClicked"/>
-                                    </Frame.GestureRecognizers>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <Label Grid.Column="0" Text="{Binding user}" TextColor="#DEDEDE" HorizontalOptions="Start" FontSize="12" VerticalOptions="Start"/>
-                                            <Label Grid.Column="1" Text="{Binding time}" TextColor="#DEDEDE" HorizontalOptions="End" FontSize="10" />
-                                        </Grid>
-                                        <Label Grid.Row="1" Text="{Binding message}" TextColor="White"/>
-                                    </Grid>
-                                </Frame>
-                            </ViewCell>
+                            <local:MsgCtrl IsMine="{Binding is_mine}"
+                                           MsgText="{Binding message}"
+                                           UserText="{Binding user}"
+                                           TimeText="{Binding time}"
+                                           MsgWidth="{Binding msg_w}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
