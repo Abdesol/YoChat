@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
 
 namespace YoChat
@@ -25,6 +26,7 @@ namespace YoChat
             else
             {
                 (BindingContext as ChatViewModel).user_type_leave_text = "Leave Room";
+                copy_code_btn.IsVisible = false;
             }
 
             MessageList.ItemTapped += (object sender, ItemTappedEventArgs e) => {
@@ -89,7 +91,13 @@ namespace YoChat
             var btn = (Button)sender;
             await btn.ScaleTo(0.8, 80);
             await btn.ScaleTo(1, 80);
+
             await Navigation.PushModalAsync(new MainPage());
+        }
+
+        public void CopyClicked(object sender , EventArgs e)
+        {
+            DependencyService.Get<IToast>().ToastShow("Code copied to clipboard");
         }
     }
 }

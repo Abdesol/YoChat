@@ -9,12 +9,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <ImageButton Grid.Column="0" Source="menu.png" BackgroundColor="Transparent" Scale="0.4" Clicked="ButtonClickedGesture"/>
-            <Label Grid.Column="1" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
+            <Label Text="YoChat" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold"/>
         </Grid>
         <StackLayout x:Name="choice_btns" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
 

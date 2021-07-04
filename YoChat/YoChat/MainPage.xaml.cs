@@ -17,31 +17,23 @@ namespace YoChat
 
         public async void ButtonClickedGesture(object sender, EventArgs args)
         {
-            try
-            {
-                var frame = (Frame)sender;
-                await frame.ScaleTo(0.8, 80);
-                await frame.ScaleTo(1, 80);
+            var frame = (Frame)sender;
+            await frame.ScaleTo(0.8, 80);
+            await frame.ScaleTo(1, 80);
 
-                int which_page = 0;
+            int which_page = 0;
 
-                if (frame == choice_btns.Children[0])
-                {
-                    Console.WriteLine("Create Room clicked");
-                }
-                else
-                {
-                    which_page = 1;
-                    Console.WriteLine("Join Room clicked");
-                }
-                await Navigation.PushModalAsync(new InitializerPage(which_page));
-            }
-            catch
+            if (frame == choice_btns.Children[0])
             {
-                var btn = (ImageButton)sender;
-                await btn.ScaleTo(0.3, 80);
-                await btn.ScaleTo(0.4, 80);
+                Console.WriteLine("Create Room clicked");
             }
+            else
+            {
+                which_page = 1;
+                Console.WriteLine("Join Room clicked");
+            }
+            await Navigation.PushModalAsync(new InitializerPage(which_page));
+            
 
         }
     }

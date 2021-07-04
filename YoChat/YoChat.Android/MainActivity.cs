@@ -10,8 +10,11 @@ using Android.Views;
 using Android.Graphics;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Android.Views.InputMethods;
+using Android.Content;
 
 [assembly: Dependency(typeof(YoChat.Droid.Environment))]
+[assembly: Dependency(typeof(YoChat.Droid.ToastMessage))]
 namespace YoChat.Droid
 {
     [Activity(Label = "YoChat", Icon = "@mipmap/icon", WindowSoftInputMode =SoftInput.AdjustResize, Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
@@ -53,7 +56,6 @@ namespace YoChat.Droid
                 {
                     return null;
                 }
-
                 return base.CurrentFocus;
             }
         }
@@ -83,5 +85,11 @@ namespace YoChat.Droid
         }
     }
 
-
+    public class ToastMessage : IToast
+    {
+        public void ToastShow(string message)
+        {
+            Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+        }
+    }
 }

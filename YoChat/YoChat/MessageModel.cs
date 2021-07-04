@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -19,10 +20,25 @@ namespace YoChat
         public MessageModel(bool from_me, string user, string message, long timestamp)
         {
             is_mine = from_me;
-            //this.user = 1;
             this.user = from_me ? "Me" : user;
 
-            var msg_cur = (message.Length*8)+80;
+            var all_length = new List<int>();
+            int k = 0;
+            foreach(char i in message)
+            {
+                if(i == '\n')
+                {
+                    all_length.Add(k);
+                    k = 0;
+                    continue;
+                }
+                k += 1;
+            }
+            all_length.Add(k);
+
+            int msg_max_length = all_length.Max();
+
+            var msg_cur = (msg_max_length * 8)+78;
             msg_w = msg_cur > max_msg_width ? max_msg_width : msg_cur;
 
             this.message = message;
