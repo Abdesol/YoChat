@@ -14,7 +14,7 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(YoChat.Droid.Environment))]
 namespace YoChat.Droid
 {
-    [Activity(Label = "YoChat", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "YoChat", Icon = "@mipmap/icon", WindowSoftInputMode =SoftInput.AdjustResize, Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -26,9 +26,6 @@ namespace YoChat.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
 
-            Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
-
-
 
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -36,6 +33,29 @@ namespace YoChat.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private bool _lieAboutCurrentFocus;
+        public override bool DispatchTouchEvent(MotionEvent ev)
+        {
+            _lieAboutCurrentFocus = true;
+            var result = base.DispatchTouchEvent(ev);
+            _lieAboutCurrentFocus = false;
+
+            return result;
+        }
+
+        public override Android.Views.View CurrentFocus
+        {
+            get
+            {
+                if (_lieAboutCurrentFocus)
+                {
+                    return null;
+                }
+
+                return base.CurrentFocus;
+            }
         }
 
     }

@@ -26,6 +26,14 @@ namespace YoChat
             {
                 (BindingContext as ChatViewModel).user_type_leave_text = "Leave Room";
             }
+
+            MessageList.ItemTapped += (object sender, ItemTappedEventArgs e) =>
+            {
+                if (e.Item == null) return;
+                if (sender is ListView lv) lv.SelectedItem = null;
+            };
+
+
         }
 
         public async void BackClicked(object sender, EventArgs args)
@@ -46,10 +54,12 @@ namespace YoChat
             base.OnAppearing();
 
 
-            viewModel.RefreshScrollDown = () => {
+            viewModel.RefreshScrollDown = () =>
+            {
                 if (viewModel.AllMessages.Count > 0)
                 {
-                    Device.BeginInvokeOnMainThread(() => {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
 
                         MessageList.ScrollTo(viewModel.AllMessages[viewModel.AllMessages.Count - 1], ScrollToPosition.End, true);
                     });
@@ -77,7 +87,6 @@ namespace YoChat
                     }
                 }
             }
-            Console.WriteLine($"Current Length -> {viewModel.msg_h}");
         }
 
         public async void LeaveClicked(object sender, EventArgs e)
@@ -86,27 +95,6 @@ namespace YoChat
             await btn.ScaleTo(0.8, 80);
             await btn.ScaleTo(1, 80);
             await Navigation.PushModalAsync(new MainPage());
-        }
-
-        public void MessageClicked(object sender, EventArgs e){}
-    }
-
-    public partial class ChatEditor : Editor
-    {
-
-        public ChatEditor()
-        {
-            TextChanged += OnTextChanged;
-        }
-
-        ~ChatEditor()
-        {
-            TextChanged -= OnTextChanged;
-        }
-
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            InvalidateMeasure();
         }
     }
 }

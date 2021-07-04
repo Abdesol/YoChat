@@ -23,39 +23,45 @@ namespace YoChat
             }
         }
 
-
+        public bool isbusy = false;
         public async void ButtonClickedGesture(object sender, EventArgs args)
         {
-            
-            try
+            if(isbusy == false)
             {
-                var frame = (Frame)sender;
-                await frame.ScaleTo(0.8, 80);
-                await frame.ScaleTo(1, 80);
-                if (RoomCodeFrame.IsVisible == true)
+
+                isbusy = true;
+                try
                 {
-                    string room_code = roomcode_entry.Text;
-                    if(room_code == "ABCDE")
+                    var frame = (Frame)sender;
+                    await frame.ScaleTo(0.8, 80);
+                    await frame.ScaleTo(1, 80);
+                    if (RoomCodeFrame.IsVisible == true)
                     {
-                        RoomCodeFrame.IsVisible = false;
+                        string room_code = roomcode_entry.Text;
+                        if (room_code == "ABCDE")
+                        {
+                            RoomCodeFrame.IsVisible = false;
+                        }
+                        else
+                        {
+                            not_exist_label.IsVisible = true;
+                        }
                     }
                     else
                     {
-                        not_exist_label.IsVisible = true;
+                        await Navigation.PushModalAsync(new ChatPage(this.which_page));
                     }
                 }
-                else
+                catch
                 {
-                    await Navigation.PushModalAsync(new ChatPage(this.which_page));
+                    var btn = (ImageButton)sender;
+                    await btn.ScaleTo(0.3, 80);
+                    await btn.ScaleTo(0.4, 80);
+                    await Navigation.PopModalAsync(true);
                 }
+                isbusy = false;
             }
-            catch
-            {
-                var btn = (ImageButton)sender;
-                await btn.ScaleTo(0.3, 80);
-                await btn.ScaleTo(0.4, 80);
-                await Navigation.PopModalAsync(true);
-            }
+
 
         }
     }

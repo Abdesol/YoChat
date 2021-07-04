@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,11 +13,13 @@ namespace YoChat
 {
     public partial class ChatViewModel : INotifyPropertyChanged
     {
+        //private readonly IThemeService _themeService;
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<MessageModel> AllMessages { get; set; }
 
         public ChatViewModel()
         {
+           // _themeService = SimpleIoc.Default.GetInstance<IThemeService>();
             AllMessages = new ObservableCollection<MessageModel>();
             msg_h = 60;
             var other = new MessageModel(false, "Ahmed", "Hello Bro. How are you? you you you ", 1625037314);

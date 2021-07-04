@@ -21,7 +21,7 @@
                     </Grid.RowDefinitions>
                     <ImageButton Grid.Column="0" Grid.Row="0" Source="back.png" BackgroundColor="Transparent" Scale="0.4" Clicked="BackClicked"/>
                     <Label Grid.Column="1" Grid.Row="0" Text="YoChat" HorizontalOptions="Start" TextColor="White" VerticalOptions="Center" FontSize="25" FontAttributes="Bold"/>
-                    <Button Grid.Column="2" Grid.Row="0" Text="{Binding user_type_leave_text}" BackgroundColor="Transparent" TextColor="Red" Clicked="LeaveClicked" HorizontalOptions="End"/>
+                    <Button Grid.Column="2" Grid.Row="0" Text="{Binding user_type_leave_text}" BackgroundColor="Transparent" TextColor="#D23131" Clicked="LeaveClicked" HorizontalOptions="End"/>
                 </Grid>
             </AbsoluteLayout>
             
@@ -36,11 +36,14 @@
                 <ListView Grid.Row="0" Grid.Column="0" x:Name="MessageList"  ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <local:MsgCtrl IsMine="{Binding is_mine}"
+                            <ViewCell>
+                                <local:MsgCtrl IsMine="{Binding is_mine}"
                                            MsgText="{Binding message}"
+                                           MsgWidth="{Binding msg_w}"
                                            UserText="{Binding user}"
-                                           TimeText="{Binding time}"
-                                           MsgWidth="{Binding msg_w}"/>
+                                           TimeText="{Binding time}"/>
+
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -53,13 +56,15 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <local:ChatEditor Grid.Row="0" Grid.Column="0"
+                    <Editor Grid.Row="0" Grid.Column="0"
                             VerticalOptions="FillAndExpand"
                             AutoSize="TextChanges" 
                             Keyboard="Chat"
                             Margin="10,0,0,0"
                             MaxLength="1000"
                             Text="{Binding message}"
+                            TextColor="White"
+                            PlaceholderColor="#E1E1E1"
                             TextChanged="EditorEdited"
                             Placeholder="Message"/>
 

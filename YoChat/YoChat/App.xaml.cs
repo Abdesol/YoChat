@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,7 @@ namespace YoChat
         public App()
         {
             InitializeComponent();
-
+            SimpleIoc.Default.Register<IThemeService, ThemeService>();
             MainPage = new MainPage();
         }
 

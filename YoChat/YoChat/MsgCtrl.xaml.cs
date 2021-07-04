@@ -23,6 +23,7 @@ namespace YoChat
             _themeService.ThemeChanged += HandleThemeChanged;
         }
 
+
         private void HandleThemeChanged(object sender, EventArgs e)
         {
             SetAppearance();
@@ -33,15 +34,21 @@ namespace YoChat
             if (!IsMine.HasValue) return;
             msg_frame.HorizontalOptions = IsMine.Value ? LayoutOptions.End : LayoutOptions.Start;
             msg_frame.BackgroundColor = IsMine.Value ? GetMineColor(_themeService.IsLightTheme) : GetRemoteColor(_themeService.IsLightTheme);
+            if (!IsMine.Value)
+            {
+                msg_label.TextColor = _themeService.IsLightTheme ? Color.Black : Color.White;
+                user_name_label.TextColor = _themeService.IsLightTheme ? Color.FromHex("2F2F2F") : Color.FromHex("DEDEDE");
+                time_label.TextColor = _themeService.IsLightTheme ? Color.FromHex("2F2F2F") : Color.FromHex("DEDEDE");
+            }
         }
 
         private Color GetMineColor(bool isLight)
         {
-            return isLight ? Color.FromHex("5BA6F0") : Color.FromHex("3E6189");
+            return isLight ? Color.FromHex("5287BC") : Color.FromHex("3E6189");
         }
         private Color GetRemoteColor(bool isLight)
         {
-            return isLight ? Color.FromHex("4979AF") : Color.FromHex("222E3A");
+            return isLight ? Color.FromHex("E3E2E7") : Color.FromHex("222E3A");
         }
 
         public static readonly BindableProperty IsMineProperty = BindableProperty.Create(
@@ -50,7 +57,7 @@ namespace YoChat
             typeof(MsgCtrl),
             propertyChanged: SetMine);
 
-
+        
         public bool? IsMine
         {
             get => (bool?)GetValue(IsMineProperty);
@@ -61,7 +68,6 @@ namespace YoChat
         private static void SetMine(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is not MsgCtrl ctrl || newValue is not bool) return;
-
             ctrl.SetAppearance();
         }
 
@@ -71,11 +77,11 @@ namespace YoChat
             typeof(string),
             typeof(MsgCtrl),
             propertyChanged: SetMsgText);
+       
 
-
-        public bool MsgText
+        public string MsgText
         {
-            get => (bool)GetValue(MsgTextProperty);
+            get => (string)GetValue(MsgTextProperty);
             set => SetValue(MsgTextProperty, value);
         }
 
@@ -89,14 +95,14 @@ namespace YoChat
         //Message Width Property ------------------------------------------------------------------------------
         public static readonly BindableProperty MsgWidthProperty = BindableProperty.Create(
             nameof(MsgWidth),
-            typeof(string),
+            typeof(double),
             typeof(MsgCtrl),
             propertyChanged: SetMsgWidth);
 
 
-        public bool MsgWidth
+        public double MsgWidth
         {
-            get => (bool)GetValue(MsgWidthProperty);
+            get => (double)GetValue(MsgWidthProperty);
             set => SetValue(MsgWidthProperty, value);
         }
 
@@ -116,9 +122,9 @@ namespace YoChat
             propertyChanged: SetUserText);
 
 
-        public bool UserText
+        public string UserText
         {
-            get => (bool)GetValue(UserTextProperty);
+            get => (string)GetValue(UserTextProperty);
             set => SetValue(UserTextProperty, value);
         }
 
@@ -128,7 +134,7 @@ namespace YoChat
             ctrl.user_name_label.Text = (string)newValue;
         }
 
-
+        
 
         // Time Text Property ------------------------------------------------------------------------------
         public static readonly BindableProperty TimeTextProperty = BindableProperty.Create(
@@ -138,9 +144,9 @@ namespace YoChat
             propertyChanged: SetTimeText);
 
 
-        public bool TimeText
+        public string TimeText
         {
-            get => (bool)GetValue(TimeTextProperty);
+            get => (string)GetValue(TimeTextProperty);
             set => SetValue(TimeTextProperty, value);
         }
 
