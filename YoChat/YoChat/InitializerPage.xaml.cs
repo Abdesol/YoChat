@@ -15,12 +15,13 @@ namespace YoChat
         public int which_page { get; set; }
         public InitializerPage(int which_page)
         {
-            this.which_page = which_page;
             InitializeComponent();
+
             if (which_page == 0)
             {
                 RoomCodeFrame.IsVisible = false;
             }
+            this.which_page = which_page;
         }
 
         public bool isbusy = false;
@@ -63,8 +64,6 @@ namespace YoChat
                 }
                 isbusy = false;
             }
-
-
         }
     }
 }

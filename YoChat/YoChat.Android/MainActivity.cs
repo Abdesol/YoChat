@@ -29,7 +29,9 @@ namespace YoChat.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
             KeyboardHelper.Init(this);
+
             LoadApplication(new App());
 
 
@@ -55,6 +57,7 @@ namespace YoChat.Droid
         {
             get
             {
+
                 if (_lieAboutCurrentFocus)
                 {
                     return null;

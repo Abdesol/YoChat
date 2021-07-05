@@ -101,5 +101,6 @@ namespace YoChat
         {
             DependencyService.Get<IToast>().ToastShow("Code copied to clipboard");
         }
+
     }
 }

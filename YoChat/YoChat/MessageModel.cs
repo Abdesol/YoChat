@@ -38,7 +38,7 @@ namespace YoChat
 
             int msg_max_length = all_length.Max();
 
-            var msg_cur = (msg_max_length * 8)+78;
+            var msg_cur = (msg_max_length * 8)+80;
             msg_w = msg_cur > max_msg_width ? max_msg_width : msg_cur;
 
             this.message = message;

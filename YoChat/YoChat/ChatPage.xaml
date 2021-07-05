@@ -43,20 +43,22 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <ListView Grid.Row="0" Grid.Column="0" x:Name="MessageList"  ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
+
+                <ListView  Grid.Row="0" Grid.Column="0" x:Name="MessageList"  ItemsSource="{Binding AllMessages}" HasUnevenRows="True" SeparatorVisibility="None" VerticalScrollBarVisibility="Never">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <local:MsgCtrl IsMine="{Binding is_mine}"
-                                           MsgText="{Binding message}"
-                                           MsgWidth="{Binding msg_w}"
-                                           UserText="{Binding user}"
-                                           TimeText="{Binding time}"/>
+                                                MsgText="{Binding message}"
+                                                MsgWidth="{Binding msg_w}"
+                                                UserText="{Binding user}"
+                                                TimeText="{Binding time}"/>
 
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
                 <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="{AppThemeBinding Dark=#212D3B, Light=#517DA2,Default=#517DA2}">
                     
                     <Grid.ColumnDefinitions>
@@ -82,6 +84,7 @@
                     <ImageButton x:Name="SendBtn" VerticalOptions="End" Grid.Column="1" Grid.Row="0" Source="send.png" BackgroundColor="Transparent" 
                                  Scale="0.4" Command="{Binding SendMessageCommand}" CommandParameter="{x:Reference SendBtn}"/>
                 </Grid>
+                    
             </Grid>
         </Grid>
     </ContentPage.Content>
