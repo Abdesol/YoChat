@@ -49,6 +49,7 @@ namespace YoChat
                     }
                     else
                     {
+                        DependencyService.Get<IKeyboardHelper>().HideKeyboard();
                         await Navigation.PushModalAsync(new ChatPage(this.which_page));
                     }
                 }
@@ -57,6 +58,7 @@ namespace YoChat
                     var btn = (ImageButton)sender;
                     await btn.ScaleTo(0.3, 80);
                     await btn.ScaleTo(0.4, 80);
+                    DependencyService.Get<IKeyboardHelper>().HideKeyboard();
                     await Navigation.PopModalAsync(true);
                 }
                 isbusy = false;

@@ -40,6 +40,7 @@ namespace YoChat
             var btn = (ImageButton)sender;
             await btn.ScaleTo(0.3, 80);
             await btn.ScaleTo(0.4, 80);
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
             await Navigation.PushModalAsync(new MainPage());
         }
 
@@ -91,6 +92,7 @@ namespace YoChat
             var btn = (Button)sender;
             await btn.ScaleTo(0.8, 80);
             await btn.ScaleTo(1, 80);
+            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
 
             await Navigation.PushModalAsync(new MainPage());
         }

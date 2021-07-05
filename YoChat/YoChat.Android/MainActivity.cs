@@ -15,6 +15,8 @@ using Android.Content;
 
 [assembly: Dependency(typeof(YoChat.Droid.Environment))]
 [assembly: Dependency(typeof(YoChat.Droid.ToastMessage))]
+[assembly: Dependency(typeof(YoChat.Droid.KeyboardHelper))]
+
 namespace YoChat.Droid
 {
     [Activity(Label = "YoChat", Icon = "@mipmap/icon", WindowSoftInputMode =SoftInput.AdjustResize, Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
@@ -27,6 +29,7 @@ namespace YoChat.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            KeyboardHelper.Init(this);
             LoadApplication(new App());
 
 
@@ -37,7 +40,7 @@ namespace YoChat.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
+        
         private bool _lieAboutCurrentFocus;
         public override bool DispatchTouchEvent(MotionEvent ev)
         {
@@ -47,7 +50,7 @@ namespace YoChat.Droid
 
             return result;
         }
-
+        
         public override Android.Views.View CurrentFocus
         {
             get
@@ -90,6 +93,27 @@ namespace YoChat.Droid
         public void ToastShow(string message)
         {
             Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+        }
+    }
+
+    [Preserve(AllMembers = true)]
+    public class KeyboardHelper : IKeyboardHelper
+    {
+        static Context _context;
+
+        public static void Init(Context context) => _context = context;
+
+        public void HideKeyboard()
+        {
+            var inputMethodManager = _context.GetSystemService(Context.InputMethodService) as InputMethodManager;
+            if (inputMethodManager != null && _context is Activity)
+            {
+                var activity = _context as Activity;
+                var token = activity.CurrentFocus?.WindowToken;
+                inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None);
+
+                activity.Window.DecorView.ClearFocus();
+            }
         }
     }
 }
