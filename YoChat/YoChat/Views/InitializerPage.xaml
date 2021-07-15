@@ -20,7 +20,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Entry Grid.Column="0" Placeholder="Type here" MaxLength="10" TextColor="White" PlaceholderColor="#B9B9B9"/>
+                        <Entry x:Name="nickname_entry" Grid.Column="0" Placeholder="Type here" MaxLength="10" TextColor="White" PlaceholderColor="#B9B9B9"/>
                         <Frame Grid.Column="1" BackgroundColor="{AppThemeBinding Dark=#151F2B, Light=#FFFFFF, Default=#FFFFFF}" CornerRadius="100">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ButtonClickedGesture"/>

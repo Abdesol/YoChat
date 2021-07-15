@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace YoChat
@@ -16,28 +17,14 @@ namespace YoChat
         //private readonly IThemeService _themeService;
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<MessageModel> AllMessages { get; set; }
-
-        public ChatViewModel()
+        public ChatViewModel(string room_code)
         {
-           // _themeService = SimpleIoc.Default.GetInstance<IThemeService>();
             AllMessages = new ObservableCollection<MessageModel>();
             msg_h = 60;
-            var other = new MessageModel(false, "Ahmed", "Hello Bro. How are you? you you you ", 1625037314);
-            var me = new MessageModel(true, "Abdesol", "I am very fine. What about you? hmmhmhmhmh", 1625037314);
-            for (int i = 0; i <= 7; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    AllMessages.Add(me);
-                }
-                else
-                {
-                    AllMessages.Add(other);
-                }
-            }
+            this.room_code = room_code;
         }
 
-        public System.Action RefreshScrollDown;
+        public Action RefreshScrollDown;
 
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
@@ -68,17 +55,30 @@ namespace YoChat
             await btn.ScaleTo(0.4, 80);
             try
             {
-                var m = message.Trim();
-                if (String.IsNullOrEmpty(m) == false)
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    var msg_model = new MessageModel(true, "Abdesol", m, DateTimeOffset.Now.ToUnixTimeSeconds());
-                    AllMessages.Add(msg_model);
-                    message = "";
-                    msg_h = 60;
-                    RefreshScrollDown();
+                    var m = message.Trim();
+                    if (String.IsNullOrEmpty(m) == false)
+                    {
+                        var msg_model = new MessageModel(true, "Abdesol", m, DateTimeOffset.Now.ToUnixTimeSeconds());
+                        MessagingCenter.Send(msg_model, "send");
+                        AllMessages.Add(msg_model);
+                        message = "";
+                        msg_h = 60;
+                        RefreshScrollDown();
+                    }
+                }
+                else
+                {
+                    DependencyService.Get<IToast>().ToastShow("Internet connection is not available!");
+                    await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
                 }
             }
-            catch { }
+            catch 
+            {
+                DependencyService.Get<IToast>().ToastShow("Unknown Error Occurred!");
+                await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
+            }
         }
 
         public int _msg_h { get; set; }
@@ -110,6 +110,23 @@ namespace YoChat
                 if (value != this._user_type_leave_text)
                 {
                     _user_type_leave_text = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public string _room_code { get; set; }
+        public string room_code
+        {
+            get
+            {
+                return _room_code;
+            }
+            set
+            {
+                if (value != this._room_code)
+                {
+                    _room_code = value;
                     NotifyPropertyChanged();
                 }
             }

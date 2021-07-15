@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Frame Grid.Column="0" BackgroundColor="Transparent"/>
-                <Button Grid.Column="1" Grid.Row="0" x:Name="copy_code_btn" Text="A7E3WQ" Clicked="CopyClicked" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark=White, Light=Black,Default=Black}"/>
+                <Button Grid.Column="1" Grid.Row="0" x:Name="copy_code_btn" Text="{Binding room_code}" Clicked="CopyClicked" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark=White, Light=Black,Default=Black}"/>
                 <Button Grid.Column="2" Grid.Row="0" Text="{Binding user_type_leave_text}" BackgroundColor="Transparent" TextColor="#D23131" Clicked="LeaveClicked"/>
             </Grid>
 
@@ -68,7 +68,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Editor Grid.Row="0" Grid.Column="0"
+                    <Editor x:Name="msg_entry" Grid.Row="0" Grid.Column="0"
                             VerticalOptions="FillAndExpand"
                             AutoSize="TextChanges" 
                             Keyboard="Chat"

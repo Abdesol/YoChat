@@ -23,14 +23,9 @@ namespace YoChat
 
             int which_page = 0;
 
-            if (frame == choice_btns.Children[0])
-            {
-                Console.WriteLine("Create Room clicked");
-            }
-            else
+            if (frame != choice_btns.Children[0])
             {
                 which_page = 1;
-                Console.WriteLine("Join Room clicked");
             }
             await Navigation.PushModalAsync(new InitializerPage(which_page));
             
