@@ -45,63 +45,80 @@ namespace YoChat
                     await frame.ScaleTo(1, 80);
                     if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                     {
-                        
-                        var conn = await cli_sock.Connect();
-                        if (conn == true)
+                        bool lets_go = true;
+                        if(RoomCodeFrame.IsVisible == true)
                         {
-                            try
+                            if (String.IsNullOrEmpty(roomcode_entry.Text))
                             {
-                                if (RoomCodeFrame.IsVisible == true)
-                                {
-                                    was_join = true;
-                                    string room_code = roomcode_entry.Text;
-                                    if (String.IsNullOrEmpty(room_code) == false)
-                                    {
-                                        var roomsetup_resp = cli_sock.RoomSetup(1, room_code);
-                                        if (roomsetup_resp["Error"] != "true")
-                                        {
-                                            RoomCodeFrame.IsVisible = false;
-                                        }
-                                        else
-                                        {
-                                            not_exist_label.IsVisible = true;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (was_join == false)
-                                    {
-                                        var roomsetup_resp = cli_sock.RoomSetup(0, "");
-                                        room_code = roomsetup_resp["RoomCode"];
-                                    }
-
-                                    string nickname = nickname_entry.Text;
-                                    if (String.IsNullOrEmpty(nickname) == false)
-                                    {
-
-                                        var setnick = cli_sock.SetNickName(nickname);
-                                        if (!setnick)
-                                        {
-                                            DependencyService.Get<IToast>().ToastShow("Unknown Error Occurred!");
-                                        }
-                                        else
-                                        {
-                                            DependencyService.Get<IKeyboardHelper>().HideKeyboard();
-                                            await Task.Delay(TimeSpan.FromSeconds(0.2));
-                                            await Navigation.PushModalAsync(new ChatPage(which_page, room_code, cli_sock));
-                                        }
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                                DependencyService.Get<IToast>().ToastShow("Unknown Error Occurred!");
+                                lets_go = false;
                             }
                         }
                         else
                         {
-                            DependencyService.Get<IToast>().ToastShow("Unknown Error Occurred!");
+                            if (String.IsNullOrEmpty(nickname_entry.Text))
+                            {
+                                lets_go = false;
+                            }
+                        }
+                        if (lets_go)
+                        {
+                            var conn = await cli_sock.Connect();
+                            if (conn == true)
+                            {
+                                try
+                                {
+                                    if (RoomCodeFrame.IsVisible == true)
+                                    {
+                                        was_join = true;
+                                        string room_code = roomcode_entry.Text;
+                                        if (String.IsNullOrEmpty(room_code) == false)
+                                        {
+                                            var roomsetup_resp = cli_sock.RoomSetup(1, room_code);
+                                            if (roomsetup_resp["Error"] != "true")
+                                            {
+                                                RoomCodeFrame.IsVisible = false;
+                                            }
+                                            else
+                                            {
+                                                not_exist_label.IsVisible = true;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (was_join == false)
+                                        {
+                                            var roomsetup_resp = cli_sock.RoomSetup(0, "");
+                                            room_code = roomsetup_resp["RoomCode"];
+                                        }
+
+                                        string nickname = nickname_entry.Text;
+                                        if (String.IsNullOrEmpty(nickname) == false)
+                                        {
+
+                                            var setnick = cli_sock.SetNickName(nickname);
+                                            if (!setnick)
+                                            {
+                                                DependencyService.Get<IToast>().ToastShow("Unknown Error Occurred!");
+                                            }
+                                            else
+                                            {
+                                                DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+                                                await Task.Delay(TimeSpan.FromSeconds(0.2));
+                                                await Navigation.PushModalAsync(new ChatPage(which_page, room_code, cli_sock));
+                                            }
+                                        }
+                                    }
+                                }
+                                catch
+                                {
+                                    DependencyService.Get<IToast>().ToastShow("Unknown Error Occurred!");
+                                }
+                            }
+                            else
+                            {
+                                DependencyService.Get<IToast>().ToastShow("Server is not available!");
+                            }
                         }
                     }
                     else

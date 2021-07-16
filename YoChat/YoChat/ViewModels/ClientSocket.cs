@@ -10,7 +10,7 @@ namespace YoChat
 {
     public class ClientSocket
     {
-        private string ip = "192.168.1.2";
+        private string ip = "147.182.130.115";
         private int port = 4545;
 
         public Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -22,8 +22,10 @@ namespace YoChat
             {
                 try
                 {
-                    sender.Connect(ip, port);
-                    return true;
+                    Task res =  sender.ConnectAsync(ip, port);
+                    int ind = Task.WaitAny(new[] { res }, 600);
+                    var connected = sender.Connected;
+                    if(connected == true) return true;
                 }
                 catch { }
             }
@@ -102,21 +104,25 @@ namespace YoChat
         public bool islive = true;
         public void LiveRecv()
         {
-            var bt = new byte[1024];
+            
             while (islive)
             {
                 try
                 {
-                    sender.Receive(bt);
-                    Console.WriteLine("Receving...");
-                    var data_bt = Encoding.ASCII.GetString(bt);
+                    var bt = new byte[1024];
+                    var data_len =  sender.Receive(bt);
+                    var data_bt = Encoding.ASCII.GetString(bt, 0, data_len);
+
                     var data = JsonConvert.DeserializeObject<RecvModel>(data_bt);
-                    Device.BeginInvokeOnMainThread(() => 
+                    Device.BeginInvokeOnMainThread(() =>
                     {
                         MessagingCenter.Send(data, "recv");
                     });
                 }
-                catch { }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc);
+                }
             }
             sender.Close();
         }

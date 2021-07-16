@@ -32,7 +32,7 @@ namespace YoChat
 
             var recv_thr = new Thread(cli_sock.LiveRecv);
             recv_thr.Start();
-            MessagingCenter.Subscribe<RecvModel>(this, "recv", (msg_obj) =>
+            MessagingCenter.Subscribe<RecvModel>(this, "recv", async (msg_obj) =>
             {
                 if(msg_obj.RoomClosed != true)
                 {
@@ -44,6 +44,8 @@ namespace YoChat
                 {
                     recv_thr.Abort();
                     cli_sock.sender.Close();
+                    DependencyService.Get<IKeyboardHelper>().HideKeyboard();
+                    await Task.Delay(TimeSpan.FromSeconds(0.2));
                     DependencyService.Get<IToast>().ToastShow("The room is closed by the creator!");
                     leaving();
                 }

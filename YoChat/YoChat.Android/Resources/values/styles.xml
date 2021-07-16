@@ -15,4 +15,13 @@
          which is used to tint widgets -->
     <!--<item name="colorAccent">#FF4081</item>-->
   </style>
+
+  <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="android:statusBarColor">@color/splash_background</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowActionBar">true</item>
+
+  </style>
 </resources>
