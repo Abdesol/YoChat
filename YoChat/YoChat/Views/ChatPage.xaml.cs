@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
@@ -53,6 +53,7 @@ namespace YoChat
 
             MessagingCenter.Subscribe<MessageModel>(this, "send", (msg_obj) => 
             {
+                new_count = 0;
                 var msg_dict = new Dictionary<string, string>();
                 msg_dict.Add("Leave", "false");
                 msg_dict.Add("Message", msg_obj.message);
@@ -180,8 +181,9 @@ namespace YoChat
             await Navigation.PushModalAsync(new MainPage());
         }
 
-        public void CopyClicked(object sender , EventArgs e)
+        public async void CopyClicked(object sender , EventArgs e)
         {
+            await Clipboard.SetTextAsync((BindingContext as ChatViewModel).room_code);
             DependencyService.Get<IToast>().ToastShow("Code copied to clipboard");
         }
 

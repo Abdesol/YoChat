@@ -81,7 +81,7 @@ namespace YoChat
             }
         }
 
-        public int _msg_h { get; set; }
+        private int _msg_h { get; set; }
         public int msg_h
         {
             get
@@ -98,7 +98,7 @@ namespace YoChat
             }
         }
 
-        public string _user_type_leave_text { get; set; }
+        private string _user_type_leave_text { get; set; }
         public string user_type_leave_text
         {
             get
@@ -115,7 +115,7 @@ namespace YoChat
             }
         }
 
-        public string _room_code { get; set; }
+        private string _room_code { get; set; }
         public string room_code
         {
             get
