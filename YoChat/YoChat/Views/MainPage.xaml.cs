@@ -31,5 +31,13 @@ namespace YoChat
             
 
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            if (Device.RuntimePlatform == Device.Android)
+                DependencyService.Get<IAndroidTerminate>().CloseApp();
+
+            return base.OnBackButtonPressed();
+        }
     }
 }

@@ -16,6 +16,7 @@ using Android.Content;
 [assembly: Dependency(typeof(YoChat.Droid.Environment))]
 [assembly: Dependency(typeof(YoChat.Droid.ToastMessage))]
 [assembly: Dependency(typeof(YoChat.Droid.KeyboardHelper))]
+[assembly: Xamarin.Forms.Dependency(typeof(YoChat.Droid.AndroidTerminate))]
 
 namespace YoChat.Droid
 {
@@ -118,6 +119,14 @@ namespace YoChat.Droid
 
                 activity.Window.DecorView.ClearFocus();
             }
+        }
+    }
+
+    public class AndroidTerminate : IAndroidTerminate
+    {
+        public void CloseApp()
+        {
+            Process.KillProcess(Process.MyPid());
         }
     }
 }
