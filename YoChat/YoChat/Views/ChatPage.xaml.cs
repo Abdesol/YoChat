@@ -84,7 +84,7 @@ namespace YoChat
                 if (e.Item == null) return;
                 if (sender is ListView lv) lv.SelectedItem = null;
             };
-
+            
         }
 
         public async void leaving()
@@ -102,6 +102,59 @@ namespace YoChat
             MessagingCenter.Send("NotClose", "leave");
 
             await Navigation.PushModalAsync(new MainPage());
+        }
+
+        public int new_count = 0;
+        public void EditorEdited(object sender, TextChangedEventArgs e)
+        {
+
+            var old_text = String.IsNullOrEmpty(e.OldTextValue) ? "" : e.OldTextValue;
+            var new_text = String.IsNullOrEmpty(e.NewTextValue) ? "" : e.NewTextValue;
+
+
+            if (new_text.Length == 0)
+            {
+                new_count = 0;
+                viewModel.msg_h = 60;
+            }
+
+            else if(old_text.Length < new_text.Length)
+            {
+                if (new_text[new_text.Length - 1] == '\n')
+                {
+                    if (viewModel.msg_h <= Application.Current.MainPage.Height / 3) viewModel.msg_h += 20;
+                    new_count = 0;
+                }
+                else
+                {
+                    new_count ++;
+                    if(new_count > msg_entry.Width/10 + 4)
+                    {
+                        if (viewModel.msg_h <= Application.Current.MainPage.Height / 3) viewModel.msg_h += 20;
+                        new_count = 0;
+                    }
+                }
+            }
+            else
+            {
+                new_count--;
+                Console.WriteLine($"Backspace clicked {new_count} , {new_text.Length}");
+                if(new_count == -1 & new_text.Length > 0)
+                {
+                    int no_line = 3;
+                    foreach(var s in new_text) if (s == '\n') no_line++;
+
+                    if(no_line*20 <= Application.Current.MainPage.Height / 3) viewModel.msg_h -= 20;
+
+                    int n = 0;
+                    for(int i = new_text.Length-1; i>=0; i--)
+                    {
+                        if (new_text[i] == '\n') break;
+                        n++;
+                    }
+                    new_count = n;
+                }
+            }
         }
 
         private ChatViewModel viewModel
@@ -134,40 +187,6 @@ namespace YoChat
                     });
                 }
             };
-        }
-
-        public int new_count = 0;
-        public void EditorEdited(object sender, TextChangedEventArgs e)
-        {
-            var text = e.NewTextValue;
-            if (text.Count() == 0)
-            {
-                viewModel.msg_h = 60;
-            }
-            else
-            {
-                var new_text = text[text.Count() - 1];
-                if (new_text == '\n')
-                {
-                    if (viewModel.msg_h <= Application.Current.MainPage.Height / 3)
-                    {
-                        viewModel.msg_h += 20;
-                        new_count = 0;
-                    }
-                }
-                else
-                {
-                    new_count += 1;
-                    if(new_count > msg_entry.Width/10 + 3)
-                    {
-                        if (viewModel.msg_h <= Application.Current.MainPage.Height / 3)
-                        {
-                            viewModel.msg_h += 20;
-                        }
-                        new_count = 0;
-                    }
-                }
-            }
         }
 
         public async void LeaveClicked(object sender, EventArgs e)

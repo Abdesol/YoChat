@@ -48,7 +48,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <local:MsgCtrl IsMine="{Binding is_mine}"
+                                <local:MsgCtrl  IsMine="{Binding is_mine}"
                                                 MsgText="{Binding message}"
                                                 MsgWidth="{Binding msg_w}"
                                                 UserText="{Binding user}"

@@ -3,6 +3,9 @@ using Android.Text;
 using YoChat.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Java.Lang;
+using Android.Views;
+using System.ComponentModel;
 
 #pragma warning disable CS0612 // Type or member is obsolete
 [assembly: ExportRenderer(typeof(Entry), typeof(NoUnderlineEntry))]
@@ -16,6 +19,12 @@ namespace YoChat.Droid
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
+
+            if (Control == null)
+            {
+                return;
+            }
+
             Control?.SetBackgroundColor(Android.Graphics.Color.Transparent);
         }
     }
@@ -26,6 +35,13 @@ namespace YoChat.Droid
         protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
             base.OnElementChanged(e);
+
+            if (Control == null)
+            {
+                return;
+            }
+
+            Control?.SetMaxLines(7);
             Control?.SetBackgroundColor(Android.Graphics.Color.Transparent);
         }
     }
