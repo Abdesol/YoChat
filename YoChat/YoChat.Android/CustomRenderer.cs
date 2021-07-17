@@ -41,7 +41,6 @@ namespace YoChat.Droid
                 return;
             }
 
-            Control?.SetMaxLines(7);
             Control?.SetBackgroundColor(Android.Graphics.Color.Transparent);
         }
     }
