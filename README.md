@@ -41,7 +41,7 @@ What are you waiting for? Install it now and start enjoying it!!
 
 # Release
 
-To download the app checkout the  playstore link that is _________
+To download the app checkout the  playstore link that is https://play.google.com/store/apps/details?id=com.abdesol.yochat
 
 
 # Contribution
