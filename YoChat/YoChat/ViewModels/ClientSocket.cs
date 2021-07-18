@@ -10,7 +10,7 @@ namespace YoChat
 {
     public class ClientSocket
     {
-        private string ip = "147.182.130.115";
+        private string ip = "ip address";
         private int port = 4545;
 
         public Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
